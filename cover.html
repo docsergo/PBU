@@ -2,170 +2,95 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Problems B Us — A CYOA in Compulsory Electracy</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Spectral:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
 <style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html, body { height: 100%; }
-body {
-  background: #150B28;
-  color: #fff;
-  font-family: 'Spectral', Georgia, serif;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 2.5rem 1.5rem;
-  position: relative;
-  overflow-x: hidden;
-}
-body::before {
-  content: '';
-  position: absolute; inset: 0; pointer-events: none;
-  background:
-    radial-gradient(ellipse at 72% 28%, rgba(107,63,160,.3) 0%, transparent 58%),
-    radial-gradient(ellipse at 22% 78%, rgba(15,110,86,.18) 0%, transparent 52%),
-    radial-gradient(ellipse at 50% 50%, rgba(153,53,86,.08) 0%, transparent 70%);
-}
-body::after {
-  content: '';
-  position: absolute; inset: 0; pointer-events: none;
-  background: repeating-linear-gradient(
-    -45deg,
-    rgba(255,255,255,.013) 0, rgba(255,255,255,.013) 1px,
-    transparent 1px, transparent 14px);
-}
-.cover {
-  position: relative; z-index: 1;
-  max-width: 520px; width: 100%;
-  display: flex; flex-direction: column;
-  align-items: center; text-align: center;
-  gap: 0;
-}
-.c-press {
-  font-family: 'Cinzel', serif; font-size: .56rem;
-  letter-spacing: .28em; text-transform: uppercase;
-  opacity: .4; margin-bottom: 2rem;
-}
-.c-wheel { margin-bottom: 1.9rem; opacity: .93; }
-.c-series {
-  font-family: 'Cinzel', serif; font-size: .6rem;
-  letter-spacing: .22em; text-transform: uppercase;
-  color: rgba(255,255,255,.38); margin-bottom: .75rem;
-}
-.c-title {
-  font-family: 'Cinzel', serif;
-  font-size: clamp(2.6rem, 8vw, 4rem);
-  font-weight: 700; letter-spacing: .08em;
-  line-height: 1.05; color: #fff;
-  margin-bottom: .5rem;
-}
-.c-b {
-  display: inline-block;
-  transform: scaleX(-1);
-  color: rgba(255,255,255,.6);
-}
-.c-sub {
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-style: italic; font-size: 1.1rem;
-  color: rgba(255,255,255,.68); line-height: 1.55;
-  margin-bottom: 2.2rem; max-width: 400px;
-}
-.c-stripes {
-  display: flex; height: 3px; width: 100%;
-  border-radius: 2px; overflow: hidden;
-  margin-bottom: 2rem;
-}
-.c-desc {
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: .96rem; line-height: 1.7;
-  color: rgba(255,255,255,.52);
-  max-width: 400px; margin-bottom: 2.4rem;
-}
-.c-authors {
-  font-family: 'Cinzel', serif; font-size: .72rem;
-  letter-spacing: .12em; text-transform: uppercase;
-  color: rgba(255,255,255,.68);
-  margin-bottom: .45rem; line-height: 1.9;
-}
-.c-pub {
-  font-family: 'Cinzel', serif; font-size: .57rem;
-  letter-spacing: .2em; text-transform: uppercase;
-  color: rgba(255,255,255,.3); margin-bottom: 2.4rem;
-}
-.c-btns {
-  display: flex; flex-wrap: wrap; gap: .65rem;
-  justify-content: center; margin-bottom: 1.8rem;
-}
-.cv-btn {
-  font-family: 'Cinzel', serif; font-size: .62rem;
-  letter-spacing: .14em; text-transform: uppercase;
-  padding: .55rem 1.25rem; border-radius: 4px;
-  border: 1.5px solid rgba(255,255,255,.32);
-  background: rgba(255,255,255,.07);
-  color: #fff; text-decoration: none;
-  transition: background .16s, border-color .16s;
-  display: inline-block;
-}
-.cv-btn:hover {
-  background: rgba(255,255,255,.15);
-  border-color: rgba(255,255,255,.6);
-}
-.cv-btn.primary {
-  background: rgba(107,63,160,.75);
-  border-color: #9B6FD0;
-}
-.cv-btn.primary:hover { background: rgba(107,63,160,.95); }
-.c-meta {
-  font-family: 'Cinzel', serif; font-size: .52rem;
-  letter-spacing: .18em; text-transform: uppercase;
-  color: rgba(255,255,255,.18);
-}
-@media (max-width: 480px) {
-  .c-title { font-size: 2.4rem; }
-  .c-desc { font-size: .88rem; }
-}
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Spectral:ital,wght@0,300;0,400;1,300;1,400&display=swap');
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{background:#150B28;color:#fff;font-family:'Spectral',Georgia,serif;
+     min-height:100vh;display:flex;flex-direction:column;align-items:center;
+     justify-content:center;padding:2.5rem 1.5rem;position:relative;overflow-x:hidden}
+body::before{content:'';position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(ellipse at 72% 28%,rgba(107,63,160,.3) 0%,transparent 58%),
+             radial-gradient(ellipse at 22% 78%,rgba(15,110,86,.18) 0%,transparent 52%);}
+body::after{content:'';position:absolute;inset:0;pointer-events:none;
+  background:repeating-linear-gradient(-45deg,rgba(255,255,255,.013) 0,
+    rgba(255,255,255,.013) 1px,transparent 1px,transparent 14px);}
+/* FIX 3: Skip link for cover */
+.skip-link{position:absolute;top:-3rem;left:1rem;background:#fff;color:#150B28;
+           padding:.5rem 1rem;border-radius:0 0 4px 4px;font-size:.9rem;
+           text-decoration:none;z-index:9999;transition:top .15s}
+.skip-link:focus{top:0}
+/* FIX 6: Focus visible */
+:focus-visible{outline:3px solid rgba(255,255,255,.9);outline-offset:3px;border-radius:3px}
+.cover{position:relative;z-index:1;max-width:520px;width:100%;
+        display:flex;flex-direction:column;align-items:center;text-align:center}
+.c-press{font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:.28em;
+          text-transform:uppercase;color:rgba(255,255,255,.6);margin-bottom:2rem}
+.c-wheel{margin-bottom:1.9rem}
+.c-series{font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:.22em;
+           text-transform:uppercase;color:rgba(255,255,255,.65);margin-bottom:.75rem}
+h1.c-title{font-family:'Cinzel',serif;font-size:clamp(2.6rem,8vw,4rem);
+           font-weight:700;letter-spacing:.08em;line-height:1.05;color:#fff;margin-bottom:.5rem}
+.c-b{display:inline-block;transform:scaleX(-1);color:rgba(255,255,255,.75)}
+.c-sub{font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;
+        font-size:1.1rem;color:rgba(255,255,255,.82);line-height:1.55;
+        margin-bottom:2.2rem;max-width:400px}
+.c-stripes{display:flex;height:3px;width:100%;border-radius:2px;overflow:hidden;margin-bottom:2rem}
+.c-desc{font-family:'Cormorant Garamond',Georgia,serif;font-size:.96rem;
+         line-height:1.7;color:rgba(255,255,255,.72);max-width:400px;margin-bottom:2.4rem}
+.c-authors{font-family:'Cinzel',serif;font-size:.72rem;letter-spacing:.12em;
+            text-transform:uppercase;color:rgba(255,255,255,.82);
+            margin-bottom:.45rem;line-height:1.9}
+.c-pub{font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:.2em;
+        text-transform:uppercase;color:rgba(255,255,255,.55);margin-bottom:2.4rem}
+.c-btns{display:flex;flex-wrap:wrap;gap:.65rem;justify-content:center;margin-bottom:1.8rem}
+.cv-btn{font-family:'Cinzel',serif;font-size:.64rem;letter-spacing:.14em;
+         text-transform:uppercase;padding:.58rem 1.3rem;
+         min-height:24px; /* FIX 9 */
+         border-radius:4px;border:1.5px solid rgba(255,255,255,.45);
+         background:rgba(255,255,255,.08);color:#fff;text-decoration:none;
+         display:inline-flex;align-items:center;transition:background .16s,border-color .16s}
+.cv-btn:hover{background:rgba(255,255,255,.18);border-color:rgba(255,255,255,.7)}
+.cv-btn.primary{background:rgba(107,63,160,.75);border-color:#9B6FD0}
+.cv-btn.primary:hover{background:rgba(107,63,160,.95)}
+/* Screen-reader only utility */
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.c-meta{font-family:'Cinzel',serif;font-size:.54rem;letter-spacing:.18em;
+         text-transform:uppercase;color:rgba(255,255,255,.55)}
+@media(max-width:480px){.c-title{font-size:2.4rem}}
 </style>
 </head>
 <body>
+<a href="#cover-content" class="skip-link">Skip to main content</a>
+<main id="cover-content" tabindex="-1">
 <div class="cover">
-  <div class="c-press">Third Sophistic Press &nbsp;·&nbsp; Digital Humanities Series</div>
-  <div class="c-wheel"><svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" width="200" height="200" aria-hidden="true"><circle cx="100" cy="100" r="95" fill="rgba(255,255,255,.04)"/><path d="M 103.60 10.07 A 90 90 0 0 1 176.08 51.92 L 135.50 77.56 A 42 42 0 0 0 101.68 58.03 Z" fill="#0F6E56" opacity="0.88"/>
-<path d="M 179.68 58.15 A 90 90 0 0 1 179.68 141.85 L 137.18 119.53 A 42 42 0 0 0 137.18 80.47 Z" fill="#BA7517" opacity="0.88"/>
+  <p class="c-press">Third Sophistic Press &nbsp;&middot;&nbsp; Digital Humanities Series</p>
+  <div class="c-wheel" role="presentation"><svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" width="200" height="200" aria-hidden="true" focusable="false"><circle cx="100" cy="100" r="95" fill="rgba(255,255,255,.04)"/><path d="M 103.60 10.07 A 90 90 0 0 1 176.08 51.92 L 135.50 77.56 A 42 42 0 0 0 101.68 58.03 Z" fill="#0F6E56" opacity="0.88"/>
+<path d="M 179.68 58.15 A 90 90 0 0 1 179.68 141.85 L 137.18 119.53 A 42 42 0 0 0 137.18 80.47 Z" fill="#8E5A00" opacity="0.88"/>
 <path d="M 176.08 148.08 A 90 90 0 0 1 103.60 189.93 L 101.68 141.97 A 42 42 0 0 0 135.50 122.44 Z" fill="#185FA5" opacity="0.88"/>
 <path d="M 96.40 189.93 A 90 90 0 0 1 23.92 148.08 L 64.50 122.44 A 42 42 0 0 0 98.32 141.97 Z" fill="#993C1D" opacity="0.88"/>
 <path d="M 20.32 141.85 A 90 90 0 0 1 20.32 58.15 L 62.82 80.47 A 42 42 0 0 0 62.82 119.53 Z" fill="#993556" opacity="0.88"/>
 <path d="M 23.92 51.92 A 90 90 0 0 1 96.40 10.07 L 98.32 58.03 A 42 42 0 0 0 64.50 77.56 Z" fill="#5F5E5A" opacity="0.88"/>
 <circle cx="100" cy="100" r="34" fill="#1A0C2E"/><text x="100" y="95" text-anchor="middle" dominant-baseline="middle" font-family="Cinzel,serif" font-size="9" font-weight="700" fill="rgba(255,255,255,.85)" letter-spacing="1">PBU</text><text x="100" y="109" text-anchor="middle" font-family="Cinzel,serif" font-size="5.5" fill="rgba(255,255,255,.5)" letter-spacing="1.5">CYOA</text></svg></div>
-  <div class="c-series">A Choose Your Own Adventure in Compulsory Electracy</div>
-  <h1 class="c-title">Problems <span class="c-b">B</span> Us</h1>
-  <p class="c-sub">
-    Six thematic threads. Four convergence passages.<br>
-    Three endings. One paradigm we didn't choose.
-  </p>
-  <div class="c-stripes"><div style="flex:1;background:#0F6E56;"></div><div style="flex:1;background:#BA7517;"></div><div style="flex:1;background:#185FA5;"></div><div style="flex:1;background:#993C1D;"></div><div style="flex:1;background:#993556;"></div><div style="flex:1;background:#5F5E5A;"></div></div>
-  <p class="c-desc">
-    A collaborative scholarly adventure through electracy, pedagogy, affect,
-    temporality, compulsory technology, and the algorithmic conditions of
-    contemporary writing — grounded in Ulmer's theory of electracy and the
-    authors' shared experience of teaching through rupture.
-  </p>
-  <div class="c-authors">
-    [Author One]<br>[Author Two]
-  </div>
-  <div class="c-pub">Third Sophistic Press &nbsp;·&nbsp; 2026</div>
-  <div class="c-btns">
+  <p class="c-series">A Choose Your Own Adventure in Compulsory Electracy</p>
+  <h1 class="c-title">Problems <span class="c-b" aria-hidden="true">B</span><span class="sr-only">B</span> Us</h1>
+  <p class="c-sub">Six thematic threads. Four convergence passages.<br>Three endings. One paradigm we didn&rsquo;t choose.</p>
+  <div class="c-stripes" aria-hidden="true"><div style="flex:1;background:#0F6E56;" role="presentation"></div><div style="flex:1;background:#8E5A00;" role="presentation"></div><div style="flex:1;background:#185FA5;" role="presentation"></div><div style="flex:1;background:#993C1D;" role="presentation"></div><div style="flex:1;background:#993556;" role="presentation"></div><div style="flex:1;background:#5F5E5A;" role="presentation"></div></div>
+  <p class="c-desc">A collaborative scholarly adventure through electracy, pedagogy, affect,
+  temporality, compulsory technology, and the algorithmic conditions of contemporary writing
+  &mdash; grounded in Ulmer&rsquo;s theory of electracy and the authors&rsquo; shared experience
+  of teaching through rupture.</p>
+  <p class="c-authors">[Author One]<br>[Author Two]</p>
+  <p class="c-pub">Third Sophistic Press &nbsp;&middot;&nbsp; 2026</p>
+  <nav class="c-btns" aria-label="Begin reading">
     <a href="index.html" class="cv-btn primary">Begin Reading</a>
     <a href="passages_index.html" class="cv-btn">Browse All Passages</a>
-    <a href="passage_001.html" class="cv-btn">Enter: Theory →</a>
-  </div>
-  <div class="c-meta">
-    111 Passages &nbsp;·&nbsp; Twine / Harlowe &nbsp;·&nbsp; Six Threads &nbsp;·&nbsp; Three Endings
-  </div>
+    <a href="passage_001.html" class="cv-btn">Enter: Theory &rarr;</a>
+  </nav>
+  <p class="c-meta">111 Passages &nbsp;&middot;&nbsp; Twine / Harlowe &nbsp;&middot;&nbsp; Six Threads &nbsp;&middot;&nbsp; Three Endings</p>
 </div>
+</main>
 </body>
 </html>
