@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>#109 — Problems B Us</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Spectral:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+
+:root {
+  --pu:     #6B3FA0;
+  --pu-l:   #F0EAF8;
+  --pu-m:   #D5C0EF;
+  --paper:  #FDFAF6;
+  --ink:    #1A1714;
+  --rule:   #D6D0C8;
+  --df: 'Cinzel', serif;
+  --tf: 'Cormorant Garamond', Georgia, serif;
+  --bf: 'Spectral', Georgia, serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--bf);
+  font-size: 16px;
+  line-height: 1.72;
+  min-height: 100vh;
+}
+
+/* ── MASTHEAD ─────────────────────────────────────────── */
+.mast {
+  background: var(--ta);
+  color: #fff;
+  padding: 2rem 2rem 1.6rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.mast::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(
+    -45deg,
+    rgba(255,255,255,.035) 0, rgba(255,255,255,.035) 1px,
+    transparent 1px, transparent 13px);
+}
+.mast > * { position: relative; }
+.m-ey {
+  font-family: var(--df);
+  font-size: .57rem; letter-spacing: .22em;
+  text-transform: uppercase; opacity: .62;
+  margin-bottom: .45rem;
+}
+.m-pid {
+  font-family: var(--df);
+  font-size: clamp(1.9rem, 5.5vw, 3.1rem);
+  font-weight: 700; letter-spacing: .06em;
+  line-height: 1; margin-bottom: .35rem;
+}
+.m-thr {
+  font-family: var(--tf);
+  font-style: italic; font-size: .97rem;
+  opacity: .84; margin-bottom: .2rem;
+}
+.m-pos {
+  font-family: var(--df);
+  font-size: .54rem; letter-spacing: .18em;
+  text-transform: uppercase; opacity: .5;
+}
+
+/* ── PROGRESS BAR ─────────────────────────────────────── */
+.prog-wrap { background: rgba(0,0,0,.2); height: 3px; }
+.prog-fill { height: 3px; background: rgba(255,255,255,.5); }
+
+/* ── THREAD BAND ──────────────────────────────────────── */
+.band {
+  background: var(--tb);
+  border-bottom: 2px solid var(--tbr);
+  padding: .48rem 1.4rem;
+  display: flex; align-items: center;
+  gap: .65rem; flex-wrap: wrap;
+}
+.band-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--ta); flex-shrink: 0;
+}
+.band-lbl {
+  font-family: var(--df);
+  font-size: .54rem; letter-spacing: .15em;
+  text-transform: uppercase; color: var(--ta);
+}
+.band-sub {
+  font-family: var(--bf);
+  font-size: .74rem; color: var(--ta);
+  opacity: .7; margin-left: auto; font-style: italic;
+}
+
+/* ── CONTAINER ─────────────────────────────────────────── */
+.wrap {
+  max-width: 700px; margin: 0 auto;
+  padding: 2rem 1.5rem 5rem;
+}
+
+/* ── EDITORIAL FLAGS ─────────────────────────────────── */
+.flag {
+  display: flex; gap: .45rem;
+  align-items: flex-start;
+  border-radius: 5px;
+  padding: .5rem .85rem;
+  font-family: var(--bf); font-size: .77rem;
+  line-height: 1.5; margin-bottom: 1rem;
+}
+.flag-ic { flex-shrink: 0; }
+.flag.ocr  { background: #FFFAE8; border: 1px solid #E8D087; color: #5A4800; }
+.flag.note { background: #EEF4FF; border: 1px solid #A0B8E8; color: #0A2760; }
+
+/* ── CONVERGENCE NOTICE ──────────────────────────────── */
+.conv-notice {
+  background: var(--pu-l);
+  border: 1.5px solid var(--pu-m);
+  border-radius: 6px; padding: .7rem 1rem;
+  font-family: var(--bf); font-size: .8rem;
+  color: var(--pu); margin-bottom: 1.2rem;
+}
+
+/* ── CROSS-THREAD BADGE ──────────────────────────────── */
+.xbadge {
+  display: inline-flex; align-items: center;
+  gap: .32rem; font-family: var(--bf);
+  font-size: .71rem; font-style: italic;
+  color: #777; margin-bottom: .9rem;
+}
+.xbadge::before { content: '↔'; font-style: normal; }
+
+/* ── PASSAGE BODY ────────────────────────────────────── */
+.pbody {
+  font-family: var(--tf);
+  font-size: 1.13rem; line-height: 1.84;
+  color: var(--ink); margin-bottom: 1.8rem;
+}
+.pbody p { margin-bottom: 1em; }
+.pbody p:last-child { margin-bottom: 0; }
+.pbody em  { font-style: italic; }
+.pbody strong { font-weight: 600; }
+.ch-title {
+  font-family: var(--tf); font-size: 1.3rem;
+  font-weight: 600; color: var(--ta);
+  margin-bottom: .75rem; padding-bottom: .35rem;
+  border-bottom: 1px solid var(--tbr);
+}
+.tag-line {
+  font-family: var(--bf); font-size: .8rem !important;
+  opacity: .55; padding-top: .3rem;
+  line-height: 1.6 !important;
+}
+.htag {
+  font-family: var(--bf); font-size: .78em;
+  color: var(--ta); opacity: .65;
+  letter-spacing: .02em;
+}
+.spk {
+  font-family: var(--df); font-size: .8em;
+  letter-spacing: .1em; font-weight: 700;
+  font-style: normal;
+}
+.spk-d { color: var(--ta); }
+.spk-m { color: var(--pu); }
+.placeholder-img {
+  border: 1.5px dashed var(--rule);
+  border-radius: 4px; padding: .9rem 1.2rem;
+  font-family: var(--bf); font-size: .82rem;
+  color: #aaa; text-align: center;
+  margin: .75rem 0;
+}
+
+/* ── NAVIGATION ──────────────────────────────────────── */
+.nav { margin-top: 1.8rem; }
+.nrule {
+  border: none; border-top: 1px solid var(--rule);
+  margin: 1.4rem 0;
+}
+.nlbl {
+  font-family: var(--df);
+  font-size: .51rem; letter-spacing: .2em;
+  text-transform: uppercase; color: #999;
+  margin-bottom: .5rem;
+}
+.nrow {
+  display: flex; flex-wrap: wrap;
+  gap: .45rem; margin-bottom: 1.1rem;
+}
+/* Base nav button */
+.nb {
+  font-family: var(--bf); font-size: .8rem;
+  padding: .34rem .85rem; border-radius: 4px;
+  border: 1.5px solid var(--ta);
+  background: rgba(255,255,255,.55);
+  color: var(--ta); text-decoration: none;
+  display: inline-block;
+  transition: background .13s, opacity .13s;
+}
+.nb:hover { background: rgba(255,255,255,.95); }
+/* Primary: next in thread */
+.nb.pri {
+  background: var(--ta); color: #fff;
+  font-weight: 600;
+}
+.nb.pri:hover { opacity: .82; }
+/* Previous: dashed border */
+.nb.prv {
+  border-style: dashed;
+  background: rgba(255,255,255,.3);
+}
+/* Hub / utility */
+.nb.hub {
+  border-color: var(--pu); color: var(--pu);
+  background: transparent;
+}
+.nb.hub:hover { background: var(--pu-l); }
+/* Convergence links */
+.nb.conv {
+  border-color: var(--pu); color: var(--pu);
+  background: rgba(107,63,160,.06);
+}
+.nb.conv:hover { background: var(--pu-l); }
+/* Alternate thread */
+.nb.alt {
+  border-color: #aaa; color: #555;
+  background: transparent;
+}
+.nb.alt:hover { background: #f4f4f4; }
+/* Endings */
+.nb.end {
+  border-color: var(--ta); color: var(--ta);
+  font-style: italic; background: transparent;
+}
+
+/* ── FOOTER ──────────────────────────────────────────── */
+.foot {
+  text-align: center;
+  font-family: var(--df); font-size: .52rem;
+  letter-spacing: .15em; text-transform: uppercase;
+  color: #ccc; margin-top: 3.5rem;
+  padding-top: 1rem; border-top: 1px solid var(--rule);
+}
+
+/* ── HUB PAGE ─────────────────────────────────────────── */
+.hub-epig {
+  border-left: 3px solid var(--pu-m);
+  padding: .65rem 1.1rem;
+  margin-bottom: 1.5rem;
+  font-family: var(--tf); font-style: italic;
+  font-size: 1.03rem; line-height: 1.7; color: #4a3d6b;
+}
+.hub-epig cite {
+  display: block; font-size: .8rem;
+  margin-top: .45rem; font-style: normal;
+  opacity: .65; font-family: var(--bf);
+}
+.hub-prose {
+  font-family: var(--tf); font-size: 1.08rem;
+  line-height: 1.8; margin-bottom: 1.8rem;
+}
+.hub-prose p { margin-bottom: .9em; }
+.hub-q {
+  font-family: var(--tf); font-size: 1.22rem;
+  font-weight: 600; font-style: italic;
+  color: var(--pu); margin-bottom: 1.7rem;
+}
+.sec-lbl {
+  font-family: var(--df); font-size: .57rem;
+  letter-spacing: .2em; text-transform: uppercase;
+  color: #999; margin-bottom: .85rem;
+  padding-bottom: .38rem; border-bottom: 1px solid var(--rule);
+}
+.tgrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(285px, 1fr));
+  gap: .95rem; margin-bottom: 2.2rem;
+}
+.tc {
+  border-radius: 8px; border: 1.5px solid transparent;
+  padding: 1.15rem 1.3rem; text-decoration: none;
+  display: block; color: inherit;
+  transition: transform .17s, box-shadow .17s;
+}
+.tc:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 22px rgba(0,0,0,.09);
+}
+.tc-num {
+  font-family: var(--df); font-size: .51rem;
+  letter-spacing: .15em; text-transform: uppercase;
+  opacity: .56; margin-bottom: .22rem;
+}
+.tc-q {
+  font-family: var(--tf); font-size: 1.03rem;
+  font-weight: 600; font-style: italic;
+  margin-bottom: .28rem; line-height: 1.3;
+}
+.tc-name {
+  font-family: var(--df); font-size: .56rem;
+  letter-spacing: .1em; text-transform: uppercase;
+  opacity: .52; margin-bottom: .38rem;
+}
+.tc-desc {
+  font-family: var(--bf); font-size: .76rem;
+  line-height: 1.5; opacity: .65; color: #333;
+}
+.tc-enter {
+  font-family: var(--df); font-size: .52rem;
+  letter-spacing: .12em; text-transform: uppercase;
+  margin-top: .7rem; opacity: .48;
+}
+.cblock {
+  background: #F7F4FB;
+  border: 1.5px solid var(--pu-m);
+  border-radius: 8px; padding: 1.1rem 1.4rem;
+  margin-bottom: 1.9rem;
+}
+.cblock-lbl {
+  font-family: var(--df); font-size: .54rem;
+  letter-spacing: .18em; text-transform: uppercase;
+  color: var(--pu); margin-bottom: .65rem;
+}
+.cbtns { display: flex; flex-wrap: wrap; gap: .45rem; }
+.cbtn {
+  font-family: var(--bf); font-size: .79rem;
+  padding: .3rem .85rem; border-radius: 4px;
+  border: 1.5px solid var(--pu);
+  background: rgba(107,63,160,.06); color: var(--pu);
+  text-decoration: none;
+  transition: background .13s; display: inline-block;
+}
+.cbtn:hover { background: var(--pu-l); }
+.cbtn .cbtn-pid {
+  font-family: var(--df); font-size: .57rem;
+  letter-spacing: .1em; margin-right: .38rem; opacity: .62;
+}
+.eblock {
+  border: 1.5px dashed var(--rule);
+  border-radius: 8px; padding: 1.1rem 1.4rem;
+}
+.eblock-lbl {
+  font-family: var(--df); font-size: .54rem;
+  letter-spacing: .18em; text-transform: uppercase;
+  color: #999; margin-bottom: .65rem;
+}
+.egrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+  gap: .75rem;
+}
+.ec {
+  border-radius: 6px; padding: .95rem 1.1rem;
+  text-decoration: none; display: block;
+  transition: box-shadow .15s;
+}
+.ec:hover { box-shadow: 0 4px 16px rgba(0,0,0,.1); }
+.ec-lbl {
+  font-family: var(--df); font-size: .52rem;
+  letter-spacing: .15em; text-transform: uppercase;
+  opacity: .55; margin-bottom: .25rem;
+}
+.ec-name {
+  font-family: var(--tf); font-size: 1rem; font-weight: 600;
+}
+
+/* ── PASSAGE INDEX ────────────────────────────────────── */
+.isec {
+  border: 1.5px solid #eee; border-radius: 8px;
+  padding: 1rem 1.3rem; margin-bottom: 1rem;
+}
+.isec-num {
+  font-family: var(--df); font-size: .5rem;
+  letter-spacing: .15em; text-transform: uppercase;
+  opacity: .52; margin-bottom: .18rem;
+}
+.isec-name {
+  font-family: var(--tf); font-size: 1.02rem;
+  font-weight: 600; margin-bottom: .22rem;
+}
+.isec-desc {
+  font-family: var(--bf); font-size: .76rem;
+  opacity: .62; line-height: 1.5; margin-bottom: .7rem;
+}
+.ibtns { display: flex; flex-wrap: wrap; gap: .38rem; }
+.ibtn {
+  font-family: var(--bf); font-size: .73rem;
+  padding: .2rem .6rem; border-radius: 3px;
+  border: 1px solid currentColor;
+  background: rgba(255,255,255,.45);
+  text-decoration: none; transition: opacity .13s;
+}
+.ibtn:hover { opacity: .58; }
+
+/* ── ENDING PAGES ─────────────────────────────────────── */
+.ebody {
+  font-family: var(--tf); font-size: 1.15rem;
+  line-height: 1.85; margin-bottom: 1.9rem;
+}
+.ebody p { margin-bottom: 1em; }
+
+/* ── RESPONSIVE ───────────────────────────────────────── */
+@media (max-width: 600px) {
+  .wrap { padding: 1.4rem 1rem 3rem; }
+  .m-pid { font-size: 2.2rem; }
+  .tgrid { grid-template-columns: 1fr; }
+  .egrid { grid-template-columns: 1fr; }
+}
+
+:root { --ta: #5F5E5A; --tb: #F1EFE8; --tbr: #d0cec6; }
+</style>
+</head>
+<body>
+<div class="mast"><div class="m-ey">Problems B Us · CYOA · Thread 06</div><div class="m-pid">#109</div><div class="m-thr">Algorithms &amp; SEO</div><div class="m-pos">Passage 22 of 24</div></div><div class="prog-wrap"><div class="prog-fill" style="width:91%"></div></div><div class="band"><div class="band-dot"></div><div class="band-lbl">Thread 06 — Algorithms &amp; SEO</div><div class="band-sub">SEO writing in practice (cont.)</div></div><div class="wrap"><div class="flag note"><span class="flag-ic">📝</span><span>Editorial: this passage is identical to #108 — one should be differentiated or removed</span></div><div class="pbody"><p>Good SEO writers are also able to make simple adjustments to include keywords where they fit contextually. For example, the program recommends we add the terms "search volume" and "search intent" several more times. The sentence "However, this volume is unlikely to lead to qualified leads because of the user's intent when searching this term" presents the perfect opportunity. Here it is re-written: "However, this search volume is unlikely to lead to qualified leads because of the user's search intent." Unfortunately, an untrained writer may unintentionally alter a sentence's meaning because they did not take the time to understand it contextually. For example, let's use this passage: "Marketing won't cut it. We need to narrow the search." If the writer knows they need to include "search volume," they may be tempted to tack it on to the end of the sentence: "We need to narrow the search volume." The sentence's meaning is now entirely different because one audience is prioritized without considering the other.</p>
+<p>Some elements of on-page SEO writing are less flexible than others. The "snippet" is an example of the search algorithm preferring and incentivizing a very specific and formulaic section of text, and then rewarding pages who do this by featuring them prominently on the SERP. Snippets provide a short answer to a search query that is relevant, brief, and prominent on the page. There are four types of snippets: paragraph-featured snippets, listicle-featured snippets, table-featured snippets, and video snippets. For our purposes, we will only focus only on paragraph-featured snippets.</p>
+<p>Attaining the paragraph-featured snippet is a coveted marketing goal, as it is invaluable virtual real estate. The snippet has large typeface, highlighted text, and is clearly designed to stand out amongst all other search results. Only sentences that Google deems to be in the correct format and most relevant to the search intent will be displayed. As Google explains:</p>
+<p>We display featured snippets when our systems determine this format will help people more easily discover what they're seeking, both from the description about the page and when they click on the link to read the page itself. They 're especially helpful for those on mobile or searching by voice ("How Google's").</p>
+<p>While Google's instructions remain vague as usual, SEO research companies, like Search Engine Land, state that the paragraph-featured snippet is almost always "composed of two or three sentences ... " and that the first sentence must start with an "is" statement. The supporting sentences must also describe the topic as completely yet concisely as possible (Long). If what they say is true, it would make sense that someone searching for "what are featured snippets?" would be met with a sentence that starts with "featured snippets are ... " and a compacted 2-3 sentence explanation. We tested this hypothesis and were not disappointed:</p>
+<p>[<div class="placeholder-img">[Image — to be inserted]</div>]</p>
+<p>While the snippet presents significant benefits to the writer in capturing the readers' attention (and takes some writing skill to get right), it allows for minimal stylistic creativity or invention. A more detailed, verbose, or creative answer may be more appealing to many readers, but as things stand, they have no chance of occupying the featured snippet or "people also ask" modules.</p>
+<p>As we have shown, much of the creative work of the writer in these scenarios comes down to determining the words and phrases the algorithm prefers, and then finding ways to implement these terms into the text of the website in a way that is agreeable to the human audience. There is a clear disconnect between the way we consider style in the first half of this chapter and the way we consider it in the second half. Ulmer's use of style is creative--puns and puncepts, neologisms, using language and structure in ways that generate new ideas. Style as used in SEO writing relies more on finding the keywords and long tail keywords that have been successful elsewhere, and integrating them into the text of a website. While this use of style still takes some creative thought and skill, the difference between it and Ulmer's is stark. To use the words of Mikhail Bakhtin, it is the difference between centrifugal and centripetal forces.</p>
+<p>In his essay "Discourse in the Novel," Bakhtin argues that language has two "forces" working on it: centripetal forces seek to centralize and unify language, whereas centrifugal forces seek to decentralize and disunify. Both of these forces are present whenever language is being used. Bakhtin points out that "language is stratified not only into linguistic dialects in the strict sense of the word ... but also ... into languages that are socio-ideological: languages of social groups, 'professional' and 'generic' languages, languages of generations, and so forth" (271-2). Bakhtin explains that these centripetal or unifying forces are always "posited," rather than "given" (270), whereas centrifugal, decentralizing forces occur more naturally. This means that centripetal, unifying forces are imposed by social structures and norms. In applying Bakhtin's ideas to rhetoric and composition, Frank Farmer writes that "composition studies has been more than a little complicit in the unifying, centripetal forces discussed here-that is, the forces of standardization, centralization, and homogeneity" (x). One such way that composition studies, and style studies in particular, has participated in unifying, centripetal forces is through the use of style guides: "prescriptive style advice, and lots of it" (xi). Farmer continues: "Strunk and White, in the opinion of many, is still the most revered of the genre, and of course, there are far too many others to mention here. What they share in common, though, is a desire to nail down, to codify that which makes a good style available to every writer, everywhere, in every moment" (xi). These are "The Books" that Lanham wrote against, the style guides and manuals that offer prescriptive, and often acontextual advice.</p>
+<p>We see traces of these style guides in the advice Google gives in their <em>Search Engine Optimization Guide</em>, and in the way the search engine algorithm prioritizes and organizes information. To put it another way, search engine algorithms and SEO writing represent a centripetal, unifying force, one which does not value or incentivize linguistic creativity. Puns and multiple meanings, neologisms-these are things writers can still utilize, but have no reason to do so if their main goal is attracting the algorithm, which is what SEO writing is mainly about.</p>
+<p>One issue, as we see it, is that those searching usually have a good idea of what they want, and those writing have a good idea about the kinds of attention they want to attract. Keywords and long tail keywords are chosen with precision in mind, chosen to avoid unexpected connotations or double meanings. Puncepts and the other aspects of generative electrate style are designed to give its users, egents, something they don't know yet. To use style to push beyond what is known toward what is unknown-invention. And so to conclude, we wonder what an electrate search engine would look like. How could a search engine be organized, how could websites be networked, in a way that promotes invention, that utilizes nonsense and chance, that gives searchers not what they are looking for, but what they didn't know they wanted to find?</p>
+<p class="tag-line"><span class="htag">#SEO</span> <span class="htag">#algorithms</span></p></div><div class="nav">
+<hr class="nrule">
+<div class="nlbl">Within this thread</div>
+<div class="nrow">
+<a href="passage_108.html" class="nb prv">← #108: SEO writing in practice</a>
+<a href="passage_110.html" class="nb pri">Continue → #110: Search engines and the modern internet</a>
+</div>
+<div class="nlbl">Jump to convergence</div>
+<div class="nrow">
+<a href="passage_030.html" class="nb conv">#030: Compromise — making peace and taking action</a>
+</div>
+<hr class="nrule">
+<div class="nrow">
+<a href="index.html" class="nb hub">← Hub</a>
+<a href="passages_index.html" class="nb hub">All Passages</a>
+<a href="cover.html" class="nb hub">Cover</a>
+</div>
+</div>
+<div class="foot">Problems B Us · CYOA · #109 · 2026</div></div>
+</body>
+</html>

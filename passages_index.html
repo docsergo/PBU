@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>All Passages — Problems B Us</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Spectral:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+
+:root {
+  --pu:     #6B3FA0;
+  --pu-l:   #F0EAF8;
+  --pu-m:   #D5C0EF;
+  --paper:  #FDFAF6;
+  --ink:    #1A1714;
+  --rule:   #D6D0C8;
+  --df: 'Cinzel', serif;
+  --tf: 'Cormorant Garamond', Georgia, serif;
+  --bf: 'Spectral', Georgia, serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--bf);
+  font-size: 16px;
+  line-height: 1.72;
+  min-height: 100vh;
+}
+
+/* ── MASTHEAD ─────────────────────────────────────────── */
+.mast {
+  background: var(--ta);
+  color: #fff;
+  padding: 2rem 2rem 1.6rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.mast::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(
+    -45deg,
+    rgba(255,255,255,.035) 0, rgba(255,255,255,.035) 1px,
+    transparent 1px, transparent 13px);
+}
+.mast > * { position: relative; }
+.m-ey {
+  font-family: var(--df);
+  font-size: .57rem; letter-spacing: .22em;
+  text-transform: uppercase; opacity: .62;
+  margin-bottom: .45rem;
+}
+.m-pid {
+  font-family: var(--df);
+  font-size: clamp(1.9rem, 5.5vw, 3.1rem);
+  font-weight: 700; letter-spacing: .06em;
+  line-height: 1; margin-bottom: .35rem;
+}
+.m-thr {
+  font-family: var(--tf);
+  font-style: italic; font-size: .97rem;
+  opacity: .84; margin-bottom: .2rem;
+}
+.m-pos {
+  font-family: var(--df);
+  font-size: .54rem; letter-spacing: .18em;
+  text-transform: uppercase; opacity: .5;
+}
+
+/* ── PROGRESS BAR ─────────────────────────────────────── */
+.prog-wrap { background: rgba(0,0,0,.2); height: 3px; }
+.prog-fill { height: 3px; background: rgba(255,255,255,.5); }
+
+/* ── THREAD BAND ──────────────────────────────────────── */
+.band {
+  background: var(--tb);
+  border-bottom: 2px solid var(--tbr);
+  padding: .48rem 1.4rem;
+  display: flex; align-items: center;
+  gap: .65rem; flex-wrap: wrap;
+}
+.band-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--ta); flex-shrink: 0;
+}
+.band-lbl {
+  font-family: var(--df);
+  font-size: .54rem; letter-spacing: .15em;
+  text-transform: uppercase; color: var(--ta);
+}
+.band-sub {
+  font-family: var(--bf);
+  font-size: .74rem; color: var(--ta);
+  opacity: .7; margin-left: auto; font-style: italic;
+}
+
+/* ── CONTAINER ─────────────────────────────────────────── */
+.wrap {
+  max-width: 700px; margin: 0 auto;
+  padding: 2rem 1.5rem 5rem;
+}
+
+/* ── EDITORIAL FLAGS ─────────────────────────────────── */
+.flag {
+  display: flex; gap: .45rem;
+  align-items: flex-start;
+  border-radius: 5px;
+  padding: .5rem .85rem;
+  font-family: var(--bf); font-size: .77rem;
+  line-height: 1.5; margin-bottom: 1rem;
+}
+.flag-ic { flex-shrink: 0; }
+.flag.ocr  { background: #FFFAE8; border: 1px solid #E8D087; color: #5A4800; }
+.flag.note { background: #EEF4FF; border: 1px solid #A0B8E8; color: #0A2760; }
+
+/* ── CONVERGENCE NOTICE ──────────────────────────────── */
+.conv-notice {
+  background: var(--pu-l);
+  border: 1.5px solid var(--pu-m);
+  border-radius: 6px; padding: .7rem 1rem;
+  font-family: var(--bf); font-size: .8rem;
+  color: var(--pu); margin-bottom: 1.2rem;
+}
+
+/* ── CROSS-THREAD BADGE ──────────────────────────────── */
+.xbadge {
+  display: inline-flex; align-items: center;
+  gap: .32rem; font-family: var(--bf);
+  font-size: .71rem; font-style: italic;
+  color: #777; margin-bottom: .9rem;
+}
+.xbadge::before { content: '↔'; font-style: normal; }
+
+/* ── PASSAGE BODY ────────────────────────────────────── */
+.pbody {
+  font-family: var(--tf);
+  font-size: 1.13rem; line-height: 1.84;
+  color: var(--ink); margin-bottom: 1.8rem;
+}
+.pbody p { margin-bottom: 1em; }
+.pbody p:last-child { margin-bottom: 0; }
+.pbody em  { font-style: italic; }
+.pbody strong { font-weight: 600; }
+.ch-title {
+  font-family: var(--tf); font-size: 1.3rem;
+  font-weight: 600; color: var(--ta);
+  margin-bottom: .75rem; padding-bottom: .35rem;
+  border-bottom: 1px solid var(--tbr);
+}
+.tag-line {
+  font-family: var(--bf); font-size: .8rem !important;
+  opacity: .55; padding-top: .3rem;
+  line-height: 1.6 !important;
+}
+.htag {
+  font-family: var(--bf); font-size: .78em;
+  color: var(--ta); opacity: .65;
+  letter-spacing: .02em;
+}
+.spk {
+  font-family: var(--df); font-size: .8em;
+  letter-spacing: .1em; font-weight: 700;
+  font-style: normal;
+}
+.spk-d { color: var(--ta); }
+.spk-m { color: var(--pu); }
+.placeholder-img {
+  border: 1.5px dashed var(--rule);
+  border-radius: 4px; padding: .9rem 1.2rem;
+  font-family: var(--bf); font-size: .82rem;
+  color: #aaa; text-align: center;
+  margin: .75rem 0;
+}
+
+/* ── NAVIGATION ──────────────────────────────────────── */
+.nav { margin-top: 1.8rem; }
+.nrule {
+  border: none; border-top: 1px solid var(--rule);
+  margin: 1.4rem 0;
+}
+.nlbl {
+  font-family: var(--df);
+  font-size: .51rem; letter-spacing: .2em;
+  text-transform: uppercase; color: #999;
+  margin-bottom: .5rem;
+}
+.nrow {
+  display: flex; flex-wrap: wrap;
+  gap: .45rem; margin-bottom: 1.1rem;
+}
+/* Base nav button */
+.nb {
+  font-family: var(--bf); font-size: .8rem;
+  padding: .34rem .85rem; border-radius: 4px;
+  border: 1.5px solid var(--ta);
+  background: rgba(255,255,255,.55);
+  color: var(--ta); text-decoration: none;
+  display: inline-block;
+  transition: background .13s, opacity .13s;
+}
+.nb:hover { background: rgba(255,255,255,.95); }
+/* Primary: next in thread */
+.nb.pri {
+  background: var(--ta); color: #fff;
+  font-weight: 600;
+}
+.nb.pri:hover { opacity: .82; }
+/* Previous: dashed border */
+.nb.prv {
+  border-style: dashed;
+  background: rgba(255,255,255,.3);
+}
+/* Hub / utility */
+.nb.hub {
+  border-color: var(--pu); color: var(--pu);
+  background: transparent;
+}
+.nb.hub:hover { background: var(--pu-l); }
+/* Convergence links */
+.nb.conv {
+  border-color: var(--pu); color: var(--pu);
+  background: rgba(107,63,160,.06);
+}
+.nb.conv:hover { background: var(--pu-l); }
+/* Alternate thread */
+.nb.alt {
+  border-color: #aaa; color: #555;
+  background: transparent;
+}
+.nb.alt:hover { background: #f4f4f4; }
+/* Endings */
+.nb.end {
+  border-color: var(--ta); color: var(--ta);
+  font-style: italic; background: transparent;
+}
+
+/* ── FOOTER ──────────────────────────────────────────── */
+.foot {
+  text-align: center;
+  font-family: var(--df); font-size: .52rem;
+  letter-spacing: .15em; text-transform: uppercase;
+  color: #ccc; margin-top: 3.5rem;
+  padding-top: 1rem; border-top: 1px solid var(--rule);
+}
+
+/* ── HUB PAGE ─────────────────────────────────────────── */
+.hub-epig {
+  border-left: 3px solid var(--pu-m);
+  padding: .65rem 1.1rem;
+  margin-bottom: 1.5rem;
+  font-family: var(--tf); font-style: italic;
+  font-size: 1.03rem; line-height: 1.7; color: #4a3d6b;
+}
+.hub-epig cite {
+  display: block; font-size: .8rem;
+  margin-top: .45rem; font-style: normal;
+  opacity: .65; font-family: var(--bf);
+}
+.hub-prose {
+  font-family: var(--tf); font-size: 1.08rem;
+  line-height: 1.8; margin-bottom: 1.8rem;
+}
+.hub-prose p { margin-bottom: .9em; }
+.hub-q {
+  font-family: var(--tf); font-size: 1.22rem;
+  font-weight: 600; font-style: italic;
+  color: var(--pu); margin-bottom: 1.7rem;
+}
+.sec-lbl {
+  font-family: var(--df); font-size: .57rem;
+  letter-spacing: .2em; text-transform: uppercase;
+  color: #999; margin-bottom: .85rem;
+  padding-bottom: .38rem; border-bottom: 1px solid var(--rule);
+}
+.tgrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(285px, 1fr));
+  gap: .95rem; margin-bottom: 2.2rem;
+}
+.tc {
+  border-radius: 8px; border: 1.5px solid transparent;
+  padding: 1.15rem 1.3rem; text-decoration: none;
+  display: block; color: inherit;
+  transition: transform .17s, box-shadow .17s;
+}
+.tc:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 22px rgba(0,0,0,.09);
+}
+.tc-num {
+  font-family: var(--df); font-size: .51rem;
+  letter-spacing: .15em; text-transform: uppercase;
+  opacity: .56; margin-bottom: .22rem;
+}
+.tc-q {
+  font-family: var(--tf); font-size: 1.03rem;
+  font-weight: 600; font-style: italic;
+  margin-bottom: .28rem; line-height: 1.3;
+}
+.tc-name {
+  font-family: var(--df); font-size: .56rem;
+  letter-spacing: .1em; text-transform: uppercase;
+  opacity: .52; margin-bottom: .38rem;
+}
+.tc-desc {
+  font-family: var(--bf); font-size: .76rem;
+  line-height: 1.5; opacity: .65; color: #333;
+}
+.tc-enter {
+  font-family: var(--df); font-size: .52rem;
+  letter-spacing: .12em; text-transform: uppercase;
+  margin-top: .7rem; opacity: .48;
+}
+.cblock {
+  background: #F7F4FB;
+  border: 1.5px solid var(--pu-m);
+  border-radius: 8px; padding: 1.1rem 1.4rem;
+  margin-bottom: 1.9rem;
+}
+.cblock-lbl {
+  font-family: var(--df); font-size: .54rem;
+  letter-spacing: .18em; text-transform: uppercase;
+  color: var(--pu); margin-bottom: .65rem;
+}
+.cbtns { display: flex; flex-wrap: wrap; gap: .45rem; }
+.cbtn {
+  font-family: var(--bf); font-size: .79rem;
+  padding: .3rem .85rem; border-radius: 4px;
+  border: 1.5px solid var(--pu);
+  background: rgba(107,63,160,.06); color: var(--pu);
+  text-decoration: none;
+  transition: background .13s; display: inline-block;
+}
+.cbtn:hover { background: var(--pu-l); }
+.cbtn .cbtn-pid {
+  font-family: var(--df); font-size: .57rem;
+  letter-spacing: .1em; margin-right: .38rem; opacity: .62;
+}
+.eblock {
+  border: 1.5px dashed var(--rule);
+  border-radius: 8px; padding: 1.1rem 1.4rem;
+}
+.eblock-lbl {
+  font-family: var(--df); font-size: .54rem;
+  letter-spacing: .18em; text-transform: uppercase;
+  color: #999; margin-bottom: .65rem;
+}
+.egrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+  gap: .75rem;
+}
+.ec {
+  border-radius: 6px; padding: .95rem 1.1rem;
+  text-decoration: none; display: block;
+  transition: box-shadow .15s;
+}
+.ec:hover { box-shadow: 0 4px 16px rgba(0,0,0,.1); }
+.ec-lbl {
+  font-family: var(--df); font-size: .52rem;
+  letter-spacing: .15em; text-transform: uppercase;
+  opacity: .55; margin-bottom: .25rem;
+}
+.ec-name {
+  font-family: var(--tf); font-size: 1rem; font-weight: 600;
+}
+
+/* ── PASSAGE INDEX ────────────────────────────────────── */
+.isec {
+  border: 1.5px solid #eee; border-radius: 8px;
+  padding: 1rem 1.3rem; margin-bottom: 1rem;
+}
+.isec-num {
+  font-family: var(--df); font-size: .5rem;
+  letter-spacing: .15em; text-transform: uppercase;
+  opacity: .52; margin-bottom: .18rem;
+}
+.isec-name {
+  font-family: var(--tf); font-size: 1.02rem;
+  font-weight: 600; margin-bottom: .22rem;
+}
+.isec-desc {
+  font-family: var(--bf); font-size: .76rem;
+  opacity: .62; line-height: 1.5; margin-bottom: .7rem;
+}
+.ibtns { display: flex; flex-wrap: wrap; gap: .38rem; }
+.ibtn {
+  font-family: var(--bf); font-size: .73rem;
+  padding: .2rem .6rem; border-radius: 3px;
+  border: 1px solid currentColor;
+  background: rgba(255,255,255,.45);
+  text-decoration: none; transition: opacity .13s;
+}
+.ibtn:hover { opacity: .58; }
+
+/* ── ENDING PAGES ─────────────────────────────────────── */
+.ebody {
+  font-family: var(--tf); font-size: 1.15rem;
+  line-height: 1.85; margin-bottom: 1.9rem;
+}
+.ebody p { margin-bottom: 1em; }
+
+/* ── RESPONSIVE ───────────────────────────────────────── */
+@media (max-width: 600px) {
+  .wrap { padding: 1.4rem 1rem 3rem; }
+  .m-pid { font-size: 2.2rem; }
+  .tgrid { grid-template-columns: 1fr; }
+  .egrid { grid-template-columns: 1fr; }
+}
+
+:root { --ta: #6B3FA0; --tb: #F0EAF8; --tbr: #D5C0EF; }
+</style>
+</head>
+<body>
+<div class="mast" style="--ta:#6B3FA0;"><div class="m-ey">Problems B Us · CYOA</div><div class="m-pid" style="font-size:1.9rem;">All Passages</div><div class="m-thr">111 passages · 6 threads · 4 convergence nodes · 3 endings</div></div><div style="background:#6B3FA0;height:3px;"></div><div class="wrap" style="--ta:#6B3FA0;--tb:#F0EAF8;--tbr:#D5C0EF;"><div style="margin-bottom:1.3rem;display:flex;gap:.5rem;"><a href="index.html" class="nb hub" style="font-size:.8rem;">← Hub</a><a href="cover.html" class="nb hub" style="font-size:.8rem;">Cover</a></div><div class="isec" style="border-color:#b8ddd1;"><div class="isec-num">Thread 01</div><div class="isec-name" style="color:#0F6E56;">Theory</div><div class="isec-desc">Ulmer, electracy, CATTt, mystory, popcycle, puns and puncepts.</div><div class="ibtns"><a href="passage_001.html" class="ibtn" style="color:#0F6E56;border-color:#0F6E56;background:#E1F5EE;">#001</a><a href="passage_002.html" class="ibtn" style="color:#0F6E56;border-color:#0F6E56;background:#E1F5EE;">#002</a><a href="passage_003.html" class="ibtn" style="color:#0F6E56;border-color:#0F6E56;background:#E1F5EE;">#003</a><a href="passage_004.html" class="ibtn" style="color:#0F6E56;border-color:#0F6E56;background:#E1F5EE;">#004</a><a href="passage_008.html" class="ibtn" style="color:#0F6E56;border-color:#0F6E56;background:#E1F5EE;">#008</a><a href="passage_015.html" class="ibtn" style="color:#0F6E56;border-color:#0F6E56;background:#E1F5EE;">#015</a><a href="passage_067.html" class="ibtn" style="color:#0F6E56;border-color:#0F6E56;background:#E1F5EE;">#067</a><a href="passage_014.html" class="ibtn" style="color:#0F6E56;border-color:#0F6E56;background:#E1F5EE;">#014</a><a href="passage_024.html" class="ibtn" style="color:#0F6E56;border-color:#0F6E56;background:#E1F5EE;">#024</a><a href="passage_028.html" class="ibtn" style="color:#0F6E56;border-color:#0F6E56;background:#E1F5EE;">#028</a><a href="passage_054.html" class="ibtn" style="color:#0F6E56;border-color:#0F6E56;background:#E1F5EE;">#054</a><a href="passage_058.html" class="ibtn" style="color:#0F6E56;border-color:#0F6E56;background:#E1F5EE;">#058</a><a href="passage_061.html" class="ibtn" style="color:#0F6E56;border-color:#0F6E56;background:#E1F5EE;">#061</a><a href="passage_072.html" class="ibtn" style="color:#0F6E56;border-color:#0F6E56;background:#E1F5EE;">#072</a><a href="passage_076.html" class="ibtn" style="color:#0F6E56;border-color:#0F6E56;background:#E1F5EE;">#076</a><a href="passage_077.html" class="ibtn" style="color:#0F6E56;border-color:#0F6E56;background:#E1F5EE;">#077</a><a href="passage_078.html" class="ibtn" style="color:#0F6E56;border-color:#0F6E56;background:#E1F5EE;">#078</a></div></div>
+<div class="isec" style="border-color:#e8d3a8;"><div class="isec-num">Thread 02</div><div class="isec-name" style="color:#BA7517;">Surprise &amp; Invention</div><div class="isec-desc">Eureka, punctum, the epiphany, the rhetoric of surprise from Cicero to Burke.</div><div class="ibtns"><a href="passage_009.html" class="ibtn" style="color:#BA7517;border-color:#BA7517;background:#FAEEDA;">#009</a><a href="passage_010.html" class="ibtn" style="color:#BA7517;border-color:#BA7517;background:#FAEEDA;">#010</a><a href="passage_016.html" class="ibtn" style="color:#BA7517;border-color:#BA7517;background:#FAEEDA;">#016</a><a href="passage_011.html" class="ibtn" style="color:#BA7517;border-color:#BA7517;background:#FAEEDA;">#011</a><a href="passage_022.html" class="ibtn" style="color:#BA7517;border-color:#BA7517;background:#FAEEDA;">#022</a><a href="passage_023.html" class="ibtn" style="color:#BA7517;border-color:#BA7517;background:#FAEEDA;">#023</a><a href="passage_024.html" class="ibtn" style="color:#BA7517;border-color:#BA7517;background:#FAEEDA;">#024</a><a href="passage_033.html" class="ibtn" style="color:#BA7517;border-color:#BA7517;background:#FAEEDA;">#033</a><a href="passage_055.html" class="ibtn" style="color:#BA7517;border-color:#BA7517;background:#FAEEDA;">#055</a><a href="passage_056.html" class="ibtn" style="color:#BA7517;border-color:#BA7517;background:#FAEEDA;">#056</a><a href="passage_057.html" class="ibtn" style="color:#BA7517;border-color:#BA7517;background:#FAEEDA;">#057</a><a href="passage_065.html" class="ibtn" style="color:#BA7517;border-color:#BA7517;background:#FAEEDA;">#065</a><a href="passage_066.html" class="ibtn" style="color:#BA7517;border-color:#BA7517;background:#FAEEDA;">#066</a><a href="passage_071.html" class="ibtn" style="color:#BA7517;border-color:#BA7517;background:#FAEEDA;">#071</a></div></div>
+<div class="isec" style="border-color:#b6d3ef;"><div class="isec-num">Thread 03</div><div class="isec-name" style="color:#185FA5;">Teaching &amp; Pedagogy</div><div class="isec-desc">Imitation, Freire, personal memoir, dialogue passages.</div><div class="ibtns"><a href="passage_005.html" class="ibtn" style="color:#185FA5;border-color:#185FA5;background:#E6F1FB;">#005</a><a href="passage_006.html" class="ibtn" style="color:#185FA5;border-color:#185FA5;background:#E6F1FB;">#006</a><a href="passage_007.html" class="ibtn" style="color:#185FA5;border-color:#185FA5;background:#E6F1FB;">#007</a><a href="passage_019.html" class="ibtn" style="color:#185FA5;border-color:#185FA5;background:#E6F1FB;">#019</a><a href="passage_025.html" class="ibtn" style="color:#185FA5;border-color:#185FA5;background:#E6F1FB;">#025</a><a href="passage_036.html" class="ibtn" style="color:#185FA5;border-color:#185FA5;background:#E6F1FB;">#036</a><a href="passage_047.html" class="ibtn" style="color:#185FA5;border-color:#185FA5;background:#E6F1FB;">#047</a><a href="passage_048.html" class="ibtn" style="color:#185FA5;border-color:#185FA5;background:#E6F1FB;">#048</a><a href="passage_049.html" class="ibtn" style="color:#185FA5;border-color:#185FA5;background:#E6F1FB;">#049</a><a href="passage_050.html" class="ibtn" style="color:#185FA5;border-color:#185FA5;background:#E6F1FB;">#050</a><a href="passage_051.html" class="ibtn" style="color:#185FA5;border-color:#185FA5;background:#E6F1FB;">#051</a><a href="passage_052.html" class="ibtn" style="color:#185FA5;border-color:#185FA5;background:#E6F1FB;">#052</a><a href="passage_059.html" class="ibtn" style="color:#185FA5;border-color:#185FA5;background:#E6F1FB;">#059</a><a href="passage_060.html" class="ibtn" style="color:#185FA5;border-color:#185FA5;background:#E6F1FB;">#060</a><a href="passage_062.html" class="ibtn" style="color:#185FA5;border-color:#185FA5;background:#E6F1FB;">#062</a><a href="passage_063.html" class="ibtn" style="color:#185FA5;border-color:#185FA5;background:#E6F1FB;">#063</a><a href="passage_089.html" class="ibtn" style="color:#185FA5;border-color:#185FA5;background:#E6F1FB;">#089</a><a href="passage_090.html" class="ibtn" style="color:#185FA5;border-color:#185FA5;background:#E6F1FB;">#090</a><a href="passage_091.html" class="ibtn" style="color:#185FA5;border-color:#185FA5;background:#E6F1FB;">#091</a><a href="passage_092.html" class="ibtn" style="color:#185FA5;border-color:#185FA5;background:#E6F1FB;">#092</a></div></div>
+<div class="isec" style="border-color:#e8c4b4;"><div class="isec-num">Thread 04</div><div class="isec-name" style="color:#993C1D;">Time, History &amp; Affect</div><div class="isec-desc">Temporality, retroactive jealousy, queer futurities, hope, histrionics.</div><div class="ibtns"><a href="passage_012.html" class="ibtn" style="color:#993C1D;border-color:#993C1D;background:#FAECE7;">#012</a><a href="passage_032.html" class="ibtn" style="color:#993C1D;border-color:#993C1D;background:#FAECE7;">#032</a><a href="passage_034.html" class="ibtn" style="color:#993C1D;border-color:#993C1D;background:#FAECE7;">#034</a><a href="passage_053.html" class="ibtn" style="color:#993C1D;border-color:#993C1D;background:#FAECE7;">#053</a><a href="passage_011.html" class="ibtn" style="color:#993C1D;border-color:#993C1D;background:#FAECE7;">#011</a><a href="passage_021.html" class="ibtn" style="color:#993C1D;border-color:#993C1D;background:#FAECE7;">#021</a><a href="passage_029.html" class="ibtn" style="color:#993C1D;border-color:#993C1D;background:#FAECE7;">#029</a><a href="passage_033.html" class="ibtn" style="color:#993C1D;border-color:#993C1D;background:#FAECE7;">#033</a><a href="passage_068.html" class="ibtn" style="color:#993C1D;border-color:#993C1D;background:#FAECE7;">#068</a><a href="passage_069.html" class="ibtn" style="color:#993C1D;border-color:#993C1D;background:#FAECE7;">#069</a><a href="passage_027.html" class="ibtn" style="color:#993C1D;border-color:#993C1D;background:#FAECE7;">#027</a><a href="passage_070.html" class="ibtn" style="color:#993C1D;border-color:#993C1D;background:#FAECE7;">#070</a><a href="passage_026.html" class="ibtn" style="color:#993C1D;border-color:#993C1D;background:#FAECE7;">#026</a><a href="passage_035.html" class="ibtn" style="color:#993C1D;border-color:#993C1D;background:#FAECE7;">#035</a><a href="passage_037.html" class="ibtn" style="color:#993C1D;border-color:#993C1D;background:#FAECE7;">#037</a></div></div>
+<div class="isec" style="border-color:#e8b8cc;"><div class="isec-num">Thread 05</div><div class="isec-name" style="color:#993556;">Compulsory Electracy</div><div class="isec-desc">COVID, ChatGPT, AI paradigm shifts, futures of education.</div><div class="ibtns"><a href="passage_013.html" class="ibtn" style="color:#993556;border-color:#993556;background:#FBEAF0;">#013</a><a href="passage_017.html" class="ibtn" style="color:#993556;border-color:#993556;background:#FBEAF0;">#017</a><a href="passage_018.html" class="ibtn" style="color:#993556;border-color:#993556;background:#FBEAF0;">#018</a><a href="passage_044.html" class="ibtn" style="color:#993556;border-color:#993556;background:#FBEAF0;">#044</a><a href="passage_045.html" class="ibtn" style="color:#993556;border-color:#993556;background:#FBEAF0;">#045</a><a href="passage_046.html" class="ibtn" style="color:#993556;border-color:#993556;background:#FBEAF0;">#046</a><a href="passage_039.html" class="ibtn" style="color:#993556;border-color:#993556;background:#FBEAF0;">#039</a><a href="passage_040.html" class="ibtn" style="color:#993556;border-color:#993556;background:#FBEAF0;">#040</a><a href="passage_041.html" class="ibtn" style="color:#993556;border-color:#993556;background:#FBEAF0;">#041</a><a href="passage_042.html" class="ibtn" style="color:#993556;border-color:#993556;background:#FBEAF0;">#042</a><a href="passage_043.html" class="ibtn" style="color:#993556;border-color:#993556;background:#FBEAF0;">#043</a><a href="passage_064.html" class="ibtn" style="color:#993556;border-color:#993556;background:#FBEAF0;">#064</a><a href="passage_081.html" class="ibtn" style="color:#993556;border-color:#993556;background:#FBEAF0;">#081</a><a href="passage_082.html" class="ibtn" style="color:#993556;border-color:#993556;background:#FBEAF0;">#082</a><a href="passage_083.html" class="ibtn" style="color:#993556;border-color:#993556;background:#FBEAF0;">#083</a><a href="passage_084.html" class="ibtn" style="color:#993556;border-color:#993556;background:#FBEAF0;">#084</a><a href="passage_085.html" class="ibtn" style="color:#993556;border-color:#993556;background:#FBEAF0;">#085</a><a href="passage_086.html" class="ibtn" style="color:#993556;border-color:#993556;background:#FBEAF0;">#086</a><a href="passage_031.html" class="ibtn" style="color:#993556;border-color:#993556;background:#FBEAF0;">#031</a><a href="passage_088.html" class="ibtn" style="color:#993556;border-color:#993556;background:#FBEAF0;">#088</a><a href="passage_093.html" class="ibtn" style="color:#993556;border-color:#993556;background:#FBEAF0;">#093</a><a href="passage_094.html" class="ibtn" style="color:#993556;border-color:#993556;background:#FBEAF0;">#094</a></div></div>
+<div class="isec" style="border-color:#d0cec6;"><div class="isec-num">Thread 06</div><div class="isec-name" style="color:#5F5E5A;">Algorithms &amp; SEO</div><div class="isec-desc">Attention economy, algorithmic audience, keyword research, Ahrefs and Surfer.</div><div class="ibtns"><a href="passage_020.html" class="ibtn" style="color:#5F5E5A;border-color:#5F5E5A;background:#F1EFE8;">#020</a><a href="passage_071.html" class="ibtn" style="color:#5F5E5A;border-color:#5F5E5A;background:#F1EFE8;">#071</a><a href="passage_072.html" class="ibtn" style="color:#5F5E5A;border-color:#5F5E5A;background:#F1EFE8;">#072</a><a href="passage_073.html" class="ibtn" style="color:#5F5E5A;border-color:#5F5E5A;background:#F1EFE8;">#073</a><a href="passage_074.html" class="ibtn" style="color:#5F5E5A;border-color:#5F5E5A;background:#F1EFE8;">#074</a><a href="passage_075.html" class="ibtn" style="color:#5F5E5A;border-color:#5F5E5A;background:#F1EFE8;">#075</a><a href="passage_087.html" class="ibtn" style="color:#5F5E5A;border-color:#5F5E5A;background:#F1EFE8;">#087</a><a href="passage_095.html" class="ibtn" style="color:#5F5E5A;border-color:#5F5E5A;background:#F1EFE8;">#095</a><a href="passage_096.html" class="ibtn" style="color:#5F5E5A;border-color:#5F5E5A;background:#F1EFE8;">#096</a><a href="passage_097.html" class="ibtn" style="color:#5F5E5A;border-color:#5F5E5A;background:#F1EFE8;">#097</a><a href="passage_098.html" class="ibtn" style="color:#5F5E5A;border-color:#5F5E5A;background:#F1EFE8;">#098</a><a href="passage_099.html" class="ibtn" style="color:#5F5E5A;border-color:#5F5E5A;background:#F1EFE8;">#099</a><a href="passage_100.html" class="ibtn" style="color:#5F5E5A;border-color:#5F5E5A;background:#F1EFE8;">#100</a><a href="passage_101.html" class="ibtn" style="color:#5F5E5A;border-color:#5F5E5A;background:#F1EFE8;">#101</a><a href="passage_102.html" class="ibtn" style="color:#5F5E5A;border-color:#5F5E5A;background:#F1EFE8;">#102</a><a href="passage_103.html" class="ibtn" style="color:#5F5E5A;border-color:#5F5E5A;background:#F1EFE8;">#103</a><a href="passage_104.html" class="ibtn" style="color:#5F5E5A;border-color:#5F5E5A;background:#F1EFE8;">#104</a><a href="passage_105.html" class="ibtn" style="color:#5F5E5A;border-color:#5F5E5A;background:#F1EFE8;">#105</a><a href="passage_106.html" class="ibtn" style="color:#5F5E5A;border-color:#5F5E5A;background:#F1EFE8;">#106</a><a href="passage_107.html" class="ibtn" style="color:#5F5E5A;border-color:#5F5E5A;background:#F1EFE8;">#107</a><a href="passage_108.html" class="ibtn" style="color:#5F5E5A;border-color:#5F5E5A;background:#F1EFE8;">#108</a><a href="passage_109.html" class="ibtn" style="color:#5F5E5A;border-color:#5F5E5A;background:#F1EFE8;">#109</a><a href="passage_110.html" class="ibtn" style="color:#5F5E5A;border-color:#5F5E5A;background:#F1EFE8;">#110</a><a href="passage_111.html" class="ibtn" style="color:#5F5E5A;border-color:#5F5E5A;background:#F1EFE8;">#111</a></div></div>
+<div class="isec" style="border-color:#D5C0EF;"><div class="isec-num">Convergence</div><div class="isec-name" style="color:#6B3FA0;">Convergence Passages</div><div class="isec-desc">Shared spine — reachable from all six threads, leading to the three endings.</div><div class="ibtns"><a href="passage_030.html" class="ibtn" style="color:#6B3FA0;border-color:#6B3FA0;background:#F0EAF8;">#030</a><a href="passage_038.html" class="ibtn" style="color:#6B3FA0;border-color:#6B3FA0;background:#F0EAF8;">#038</a><a href="passage_079.html" class="ibtn" style="color:#6B3FA0;border-color:#6B3FA0;background:#F0EAF8;">#079</a><a href="passage_080.html" class="ibtn" style="color:#6B3FA0;border-color:#6B3FA0;background:#F0EAF8;">#080</a></div></div>
+<div class="isec" style="border-color:#D6D0C8;"><div class="isec-num">Endings</div><div class="isec-name" style="color:#5F5E5A;">Three Endings</div><div class="isec-desc">Making Peace · Taking Action · Keep Dancing</div><div class="ibtns"><a href="ending_a.html" class="ibtn" style="color:#0F6E56;border-color:#0F6E56;background:#E1F5EE;">Making Peace</a><a href="ending_b.html" class="ibtn" style="color:#993C1D;border-color:#993C1D;background:#FAECE7;">Taking Action</a><a href="ending_c.html" class="ibtn" style="color:#6B3FA0;border-color:#6B3FA0;background:#F0EAF8;">Keep Dancing</a></div></div>
+<div class="foot">Problems B Us · CYOA · All Passages · 2026</div></div>
+</body>
+</html>
